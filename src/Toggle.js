@@ -2,30 +2,28 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Switch from './Switch'
 const TOGGLE_CONTEXT = '__toggle__'
+export const withToggle = (Component) => {
+  function Wrapper(props, context) {
+    const toggleContext = context[TOGGLE_CONTEXT]
+    return <Component toggle={toggleContext} {...props} />
+  }
+  Wrapper.contextTypes = {
+    [TOGGLE_CONTEXT]: PropTypes.object.isRequired
+  }
+  return Wrapper
+}
 
-function ToggleOn({children}, context) {
-  const {on} = context[TOGGLE_CONTEXT]
+const ToggleOn = withToggle(({children, toggle: {on}}) => {
   return on ? children : null
-}
-ToggleOn.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-}
+})
 
-function ToggleOff({children}, context) {
-  const {on} = context[TOGGLE_CONTEXT]
+const ToggleOff = withToggle(({children, toggle: {on}}) => {
   return on ? null : children
-}
-ToggleOff.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-}
+})
 
-function ToggleButton(props, context) {
-  const {on, toggle} = context[TOGGLE_CONTEXT]
+const ToggleButton = withToggle(({toggle: {on, toggle}, ...props}) => {
   return <Switch on={on} toggle={toggle} {...props} />
-}
-ToggleButton.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-}
+})
 
 class Toggle extends Component {
   static On = ToggleOn

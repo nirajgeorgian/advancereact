@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import Toggle from './Toggle'
+import { withToggle } from './Toggle'
 import logo from './logo.svg';
 import './App.css';
+
+const MyToggle = withToggle(({toggle: { on, toggle }}) => (
+  <button onClick={toggle}>{on ? 'On' : 'Off'}</button>
+))
 
 class App extends Component {
   render() {
@@ -17,9 +22,10 @@ class App extends Component {
         <Toggle
           onToggle={(data) => console.log(data)}
         >
+          <Toggle.Button />
           <Toggle.On>Toggle is On</Toggle.On>
           <Toggle.Off>Toggle is Off</Toggle.Off>
-          <Toggle.Button />
+          <MyToggle />
           <hr />
         </Toggle>
       </div>
