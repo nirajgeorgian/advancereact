@@ -11,6 +11,7 @@ export const withToggle = (Component) => {
     [TOGGLE_CONTEXT]: PropTypes.object.isRequired
   }
   Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
+  Wrapper.wrappedComponent = Component
   return Wrapper
 }
 
