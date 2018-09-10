@@ -10,25 +10,26 @@ export const withToggle = (Component) => {
   Wrapper.contextTypes = {
     [TOGGLE_CONTEXT]: PropTypes.object.isRequired
   }
+  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
   return Wrapper
 }
 
-const ToggleOn = withToggle(({children, toggle: {on}}) => {
+const ToggleOn = ({children, toggle: {on}}) => {
   return on ? children : null
-})
+}
 
-const ToggleOff = withToggle(({children, toggle: {on}}) => {
+const ToggleOff = ({children, toggle: {on}}) => {
   return on ? null : children
-})
+}
 
-const ToggleButton = withToggle(({toggle: {on, toggle}, ...props}) => {
+const ToggleButton = ({toggle: {on, toggle}, ...props}) => {
   return <Switch on={on} toggle={toggle} {...props} />
-})
+}
 
 class Toggle extends Component {
-  static On = ToggleOn
-  static Off = ToggleOff
-  static Button = ToggleButton
+  static On = withToggle(ToggleOn)
+  static Off = withToggle(ToggleOff)
+  static Button = withToggle(ToggleButton)
 	static defaultProps = {
 		onToggle: () => {}
 	}

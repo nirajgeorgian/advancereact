@@ -4,9 +4,11 @@ import { withToggle } from './Toggle'
 import logo from './logo.svg';
 import './App.css';
 
-const MyToggle = withToggle(({toggle: { on, toggle }}) => (
+const MyToggle = ({toggle: { on, toggle }}) => (
   <button onClick={toggle}>{on ? 'On' : 'Off'}</button>
-))
+)
+MyToggle.displayName = 'MyToggle'
+const MyToggleWrapper = withToggle(MyToggle)
 
 class App extends Component {
   render() {
@@ -25,7 +27,7 @@ class App extends Component {
           <Toggle.Button />
           <Toggle.On>Toggle is On</Toggle.On>
           <Toggle.Off>Toggle is Off</Toggle.Off>
-          <MyToggle />
+          <MyToggleWrapper />
           <hr />
         </Toggle>
       </div>
